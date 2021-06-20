@@ -38,25 +38,28 @@ class Student:
         if not isinstance(other, Student):
             print("Сравнивать можно только студентов :(")
             return
-        return self.average_grade() < other.average_grade()
+        res = f'Средний бал {self.name} хуже, чем у {other.name}? - {self.average_grade() < other.average_grade()}'
+        return res
 
     def __le__(self, other):
         if not isinstance(other, Student):
             print("Сравнивать можно только студентов :(")
             return
-        return self.average_grade() <= other.average_grade()
-
+        res = f'Средний бал {self.name} хуже или такой же как у {other.name}? - {self.average_grade() <= other.average_grade()}'
+        return res
+    
 def student_average_grade_course(students, course):
     summ = []
     for student in students:
         for courses, grade in student.grades.items():
-            if courses == course:
+            if courses in course:
                 i = 0
                 while i < len(grade):
                     summ.append(grade[i])
                     i += 1
     av_grade_course = sum(summ) / len(summ)
-    return av_grade_course
+    res = f'Средний балл всех студентов на этом курсе - {av_grade_course}'
+    return res
 
 class Mentor:
     def __init__(self, name, surname):
@@ -88,13 +91,15 @@ class Lecturer(Mentor):
         if not isinstance(other, Lecturer):
             print("Сравнивать можно только лекторов :(")
             return
-        return self.average_rating() < other.average_rating()
+        res = f'Средний бал {self.name} хуже, чем у {other.name}? - {self.average_rating() < other.average_rating()}'
+        return res
 
     def __le__(self, other):
         if not isinstance(other, Lecturer):
             print("Сравнивать можно только лекторов :(")
             return
-        return self.average_rating() <= other.average_rating()
+        res = f'Средний бал {self.name} хуже или такой же как у {other.name}? - {self.average_rating() <= other.average_rating()}'
+        return res
 
 def lecturer_average_grade(lecturers):
     summ = []
@@ -105,7 +110,8 @@ def lecturer_average_grade(lecturers):
                 summ.append(grade[i])
                 i += 1
     av_grade = sum(summ) / len(summ)
-    return av_grade
+    res = f'Средний балл всех лекторов - {av_grade}'
+    return res
 
 class Reviewer(Mentor):
 
@@ -149,37 +155,43 @@ nice_reviewer.courses_attached += ['Python', 'HTML', 'JS']
 nice_lecturer = Lecturer('Stephen', 'Nowaking')
 nice_lecturer.courses_attached += ['Python', 'HTML', 'JS']
 # Лектор 2
-best_lecturer = Lecturer('Ole', 'G')
+best_lecturer = Lecturer('Phile', 'Hit')
 best_lecturer.courses_attached += ['Python', 'HTML', 'JS']
 
 # Ставим оценки студентам
 cool_reviewer.rate_hw(best_student, 'Python', 7)
 nice_reviewer.rate_hw(best_student, 'HTML', 7)
-cool_reviewer.rate_hw(iot_student, 'Python', 10)
+cool_reviewer.rate_hw(iot_student, 'Python', 7)
 nice_reviewer.rate_hw(best_student, 'Python', 7)
-cool_reviewer.rate_hw(iot_student, 'JS', 10)
-nice_reviewer.rate_hw(best_student, 'HTML', 10)
+cool_reviewer.rate_hw(iot_student, 'JS', 7)
+nice_reviewer.rate_hw(best_student, 'HTML', 7)
 
 # Cтавим оценки лекторам
 best_student.lecturer_grade(nice_lecturer, 'Python', 10)
 iot_student.lecturer_grade(best_lecturer, 'JS', 10)
 best_student.lecturer_grade(nice_lecturer, 'HTML', 10)
-best_student.lecturer_grade(nice_lecturer, 'Python', 8)
+best_student.lecturer_grade(nice_lecturer, 'Python', 10)
 iot_student.lecturer_grade(best_lecturer, 'Python', 10)
 
 students_list = [best_student, iot_student]
 lectors_list = [nice_lecturer, best_lecturer]
-# print(student_average_grade_course(students_list, 'Python'))
+
+
+
+
+
+# Информация обо всех
+print(cool_reviewer)
+print(nice_reviewer)
+print(nice_lecturer)
+print(best_lecturer)
+print(best_student)
+print(iot_student)
+# Средние оценки для всех персонажей класса
+print(student_average_grade_course(students_list, 'Python'))
 print(lecturer_average_grade(lectors_list))
-
-# # Сравним кого-нибудь
-# print(nice_lecturer < best_lecturer)
-# print(iot_student >= best_student)
-
-# # Вывод(общий)
-# print(cool_reviewer)
-# print(nice_reviewer)
-# print(nice_lecturer)
-# print(best_lecturer)
-# print(best_student)
-# print(iot_student)
+# Сравним кого-нибудь
+print(nice_lecturer > best_lecturer)
+print(nice_lecturer >= best_lecturer)
+print(iot_student > best_student)
+print(iot_student >= best_student)
